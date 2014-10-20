@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Assignment 2</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+        <style>
+            body {
+                min-height: 460px; background-color: #1c1c1c;
+                font: 14px Arial, Helvetica;
+            }
+            #carousel {
+                margin: auto; margin-top: 40px; padding: 5px;
+                width: 600px; height: 449px;
+                border-radius: 5px;
+                -moz-box-shadow: 0px 0px 25px rgba(255,255,255,.5);
+                position: relative;
+                box-sizing:border-box;
+            }
+            #keyPad {
+                width: 598px; height: 50px;
+                position: absolute; bottom: 5px; left:5px;
+                border: 1px solid #3f3f3f;
+                border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; background-color: #1f1f1f;
+                overflow: hidden;
+            }
+            #navBar { text-align: center; margin-top: 15px; color: #5c5c5c; }
+            #navBar a { color: #5c5c5c; text-decoration: none; text-shadow: -1px -1px #000; margin: 0 15px; }
+            
+            /* Additional CSS */
+            #viewPort {
+                position: relative;
+                width: 598px;
+                height: 400px;
+                overflow: hidden;
+                box-sizing:border-box;
+
+            }
+            #imagesStrap {
+                position: absolute;
+                width: 2400px;
+                height: 400px;
+            }
+            .photo {
+                float: left;
+                width: 600px;
+                height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="carousel">
+            <div id="viewPort">
+                <div id="imagesStrap"> 
+                    <img class="photo" src="image1.jpg" alt="image1.jpg"></img> 
+                    <img class="photo" src="image2.jpg" alt="image2.jpg"></img>
+                    <img class="photo" src="image3.jpg" alt="image3.jpg"></img> 
+                    <img class="photo" src="image4.jpg" alt="image4.jpg"></img>
+                </div>
+            </div>
+            <div id="keyPad">
+                <div id="navBar">
+                    <a href="prev" class="prevButton btn" role="button">Prev</a>|
+                    <a href="next" class="nextButton btn" role="button">Next</a>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script> 
+
+    <script>
+        $(document).ready(function(){
+
+            // Disable prev button as initial state
+            $(".prevButton").addClass("disabled");
+
+            $('a').click(function(event){
+                event.preventDefault();
+                var attrib = $(this).attr('href');
+
+                if (attrib === 'prev') {
+                    // alert('prev link was clicked');
+                    $('#imagesStrap').animate( {
+                        left: '+=600px', 
+                    }, 1500 );
+                    // disable "prev" button if the first image is being displayed
+                    if ( Number($('#imagesStrap').css('left').split('px')[0]) === -600 ) {
+                        $(".prevButton").addClass("disabled");
+                    }
+                    // enable "next" button
+                    $(".nextButton").removeClass("disabled");
+
+                }  //end of "if"
+
+                else if (attrib === 'next') {
+                    // alert('next link was clicked');
+                    $('#imagesStrap').animate( {
+                        left: '-=600px',
+                    }, 1500 );
+
+                    // disable "next" button if the last image is being displayed
+                    if ( Number($('#imagesStrap').css('left').split('px')[0]) === -1200 ) {
+                        $(".nextButton").addClass("disabled");
+                    }
+                   // enable "prev" button
+                    $(".prevButton").removeClass("disabled");
+
+                };  // end of "else if"
+
+            }); //end of "click"
+        });  // end of "ready"
+    </script>
+</html>
